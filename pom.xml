@@ -3,17 +3,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.datastax.samples</groupId>
+	<groupId>com.datastax.examples</groupId>
 	<artifactId>microservice-parent</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
-	<name>Microservices with Spring for Apache Cassandra</name>
+	<name>Spring microservices with Apache Cassandra and Kubernetes</name>
 	<packaging>pom</packaging>
 	<inceptionYear>2020</inceptionYear>
 	<description>
-	 We have build 2 microservices on top of Apache Cassandra using the version 4.6.x 
-	 of the driver. One is illustrating the Spring Data capability and the other the usage of the 
-	 core driver by itself.
+	 This project contains Spring microservices that use Apache Cassandra as the database.
+		One uses Spring Data Cassandra for data access and the other uses Spring Boot and the
+		Cassandra Java driver version 4.x directly.
 	</description>
 
 	<properties>
@@ -26,8 +26,10 @@
 		<!-- Spring -->
 		<spring.version>5.2.6.RELEASE</spring.version>
 		<spring-boot.version>2.3.0.RELEASE</spring-boot.version>
+		<spring-cloud.version>2.2.3.RELEASE</spring-cloud.version>
 		<spring-data.version>3.0.0.RELEASE</spring-data.version>
 		<spring-data-rest.version>3.3.0.RELEASE</spring-data-rest.version>
+		<spring-cloud-kubernetes.version>1.1.3.RELEASE</spring-cloud-kubernetes.version>
 
 		<cassandra-java-driver.version>4.6.1</cassandra-java-driver.version>
 
@@ -36,12 +38,22 @@
 		<logback.version>1.2.3</logback.version>
 		<jackson.version>2.11.0</jackson.version>
 		<springdoc.version>1.3.9</springdoc.version>
+		<swagger.version>2.9.2</swagger.version>
+		<swaggerui.version>3.26.0</swaggerui.version>
 
 	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.0.RELEASE</version>
+		<relativePath />
+	</parent>
 
 	<modules>
 		<module>microservice-spring-boot</module>
 		<module>microservice-spring-data</module>
+		<module>gateway-service</module>
 	</modules>
 
 	<dependencyManagement>
@@ -57,6 +69,16 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-thymeleaf</artifactId>
 				<version>${spring-boot.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-kubernetes-config</artifactId>
+				<version>${spring-cloud-kubernetes.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-gateway</artifactId>
+				<version>${spring-cloud.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
@@ -115,7 +137,7 @@
 			<dependency>
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger-ui</artifactId>
-				<version>${swagger.version}</version>
+				<version>${swaggerui.version}</version>
 			</dependency>
 
 			<!-- Third party -->

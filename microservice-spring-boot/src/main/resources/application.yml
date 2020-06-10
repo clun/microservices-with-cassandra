@@ -1,23 +1,24 @@
+spring.application.name: spring-boot-service
+
 server:
-  port: ${PORT:8080}
- 
-# ---------------------------------------------------
-# Configuring the CqlSession to connect Cassandra
-# 
-# Leverage on convention over configuration
-# - No configuration Bean to define
-spring:
-  data:
-    cassandra:
-      contact-points: localhost:9042
-      local-datacenter: dc1
-      keyspace-name: springdemo
-      schema-action: CREATE_IF_NOT_EXISTS
-      #password:
-      #username: 
-      request:
-        page-size: 5000
-        consistency: quorum
-      connection:
-        connect-timeout: 5s
-        init-query-timeout: 500ms
+  port: 8083
+
+management:
+  server:
+    port: 8084
+
+cassandra.contact-points: host.docker.internal
+cassandra.keyspace: betterbotz
+cassandra.local-datacenter: datastax-desktop
+cassandra.port: 9042
+---
+spring.profiles: docker
+cassandra.contact-points: host.docker.internal
+---
+spring.profiles: kubernetes
+spring.cloud.kubernetes.enabled: true
+spring.cloud.kubernetes.config.enabled: true
+spring.cloud.kubernetes.config.sources.namespace: spring-boot-service
+spring.cloud.kubernetes.reload.enabled: true
+spring.cloud.kubernetes.reload.mode: event
+kubernetes.trust.certificates: true

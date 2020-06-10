@@ -6,10 +6,12 @@
         </encoder>
     </appender>
 
-    <logger name="com.datastax.sample" level="INFO" additivity="false">
+    <logger name="com.datastax.examples" level="INFO" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
-    
+
+    <logger name="org.springframework.web" level="DEBUG" />
+
     <root level="ERROR">
         <appender-ref ref="STDOUT" />
     </root>

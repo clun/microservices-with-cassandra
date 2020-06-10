@@ -1,34 +1,27 @@
-server:
-  port: ${PORT:8080}
- 
-# ---------------------------------------------------
-# Full Convention
-# ---------------------------------------------------
+spring.application.name: spring-data-service
+
+server.port: 8081
+
+management.server.port: 8082
+
 spring:
   data:
     cassandra:
-      contact-points: localhost
       port: 9042
-      local-datacenter: dc1
       keyspace-name: betterbotz
+      local-datacenter: localhost
       schema-action: create-if-not-exists
-      
-springdoc:
-  api-docs:
-    enabled: true
-    groups:
-      enabled: true
-  swagger-ui:
-    path: /swagger-ui.html
-    display-request-duration: true
-    groups-order: DESC
-  version: 1.0-SNAPSHOT
-  show-actuator: true
-  group-configs:
-  - group: Rest Controllers (Spring MVC)
-    packages-to-scan: com.datastax.sample.resources
-# KO
-#  - group: Spring Data Rest
-#    packages-to-scan: com.datastax.sample.repository
-  
+    rest:
+      basePath: /api
+
+---
+spring.profiles: kubernetes
+spring.cloud.kubernetes.enabled: true
+spring.cloud.kubernetes.config.enabled: true
+spring.cloud.kubernetes.config.sources.namespace: spring-data-service
+spring.cloud.kubernetes.reload.enabled: true
+spring.cloud.kubernetes.reload.mode: event
+spring.cloud.kubernetes.reload.strategy: refresh
+kubernetes.trust.certificates: true
+management.endpoint.restart.enabled: true
      
