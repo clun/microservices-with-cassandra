@@ -1,0 +1,2 @@
+
+${AnsiColor.BLUE}The application should be available on ${AnsiColor.RED}http://localhost:8080  
